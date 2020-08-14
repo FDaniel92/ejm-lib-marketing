@@ -1,0 +1,32 @@
+@import "./src/assets/styles/template/variables/variables.scss";
+#app.jbk {
+    .container-outerbox {
+        background: $color-jbk-1;
+    }
+}
+#app.jbk-light {
+    .container-outerbox {
+        background: $color-jbklight-1;
+    }
+}
+#app.ehk {
+    .container-outerbox {
+        background: $color-ehk-1;
+    }
+}
+#app.eck {
+    .container-outerbox {
+        background: $color-eck-1;
+    }
+}
+.container-outerbox {
+    width: 100%;
+    margin: 150px 0 50px 0;
+    position: relative;
+    .infobox {
+        top: -145px;
+        @media (min-width: $lg-devices) {
+            top: -175px;
+        }
+    }
+}
