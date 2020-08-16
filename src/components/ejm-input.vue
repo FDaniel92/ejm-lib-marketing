@@ -22,17 +22,41 @@ export default {
     name: String,
     id: String,
     inputLabel: String,
-    isActiveLabel: {
-      type: Boolean,
-      default: false,
-    },
   },
   methods: {
     updateValue(value) {
       this.$emit("input", value);
+
+      if (this.type === "text") {
+        if (!this.validOnlyLetters(value)) {
+          this.$el.children[0].classList.add("error");
+        } else {
+          this.$el.children[0].classList.add("success");
+          this.$el.children[1].classList.add("success");
+          this.$el.children[2].classList.remove("active");
+        }
+      }
+
+      if (this.type === "email") {
+        if (!this.validEmail(value)) {
+          this.$el.children[0].classList.add("error");
+        } else {
+          this.$el.children[0].classList.add("success");
+          this.$el.children[1].classList.add("success");
+          this.$el.children[2].classList.remove("active");
+        }
+      }
     },
     updateLabelProp() {
       this.$refs.labelForInput.classList.add("active");
+    },
+    validEmail(email) {
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
+    validOnlyLetters(text) {
+      var regex = /[a-zA-Z]+/g;
+      return regex.test(text);
     },
   },
 };
@@ -69,13 +93,17 @@ export default {
     left: 10px;
     z-index: 1;
     transition: 0.25s ease-in-out;
+    background: white;
     &.active {
-      top: 0%;
+      top: 15%;
       z-index: 3;
       font-size: 12px;
     }
     &.error {
       color: red;
+    }
+    &.success {
+      color: green;
     }
   }
   span {

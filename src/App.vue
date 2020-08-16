@@ -1,32 +1,37 @@
 <template>
   <form id="app" @submit.prevent="checkForm" action="/something" method="post" novalidate="true">
+    <div style="height: 80px;"></div>
     <ejm-input ref="nameInput" type="text" name="name" id="name" v-model="name" inputLabel="Név" />
     <ejm-input
       ref="emailInput"
-      type="text"
+      type="email"
       name="email"
       id="email"
       v-model="email"
       inputLabel="Email"
     />
-    <ejm-textarea placeholder="Üzenet szövege"></ejm-textarea>
+    <ejm-textarea ref="textareaInput" name="textarea" v-model="textarea" inputLabel="Üzenet szövege:"></ejm-textarea>
     <ejm-button type="submit" label="Elküldöm"></ejm-button>
+    <h2></h2>
   </form>
 </template>
 
 <script lang="js">
 import ejmInput from '@/components/ejm-input.vue';
 import ejmButton from '@/components/ejm-button.vue';
+import ejmTextarea from '@/components/ejm-textarea.vue';
 export default {
   name: "App",
   components: {
     ejmInput,
-    ejmButton
+    ejmButton,
+    ejmTextarea
   },
   data() {
     return {
       name: null,
-      email: null
+      email: null,
+      textarea: null,
     };
   },
   methods: {
@@ -41,15 +46,16 @@ export default {
         this.$refs.emailInput.$el.children[0].classList.add("error");
         this.$refs.emailInput.$el.children[1].classList.add("error");
         this.$refs.emailInput.$el.children[2].classList.add("active");
-      } else if (!this.validEmail(this.email)) {
-        this.$refs.emailInput.$el.children[2].innerHTML = "Nem megfelelő e-mail formátum!";
-      } else {
-        alert("Köszönjük az érdeklődést!");
       }
-    },
-    validEmail: function (email) {
-      var re = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/ig;
-      return re.test(email);
+
+      if (!this.textarea) {
+        this.$refs.textareaInput.$el.children[0].classList.add("error");
+        this.$refs.textareaInput.$el.children[1].classList.add("error");
+        this.$refs.textareaInput.$el.children[2].classList.add("active");
+      }
+      console.log(this.name);
+      console.log(this.email);
+      console.log(this.textarea);
     },
   }
 };
