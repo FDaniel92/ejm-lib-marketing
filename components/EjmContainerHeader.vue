@@ -1,9 +1,10 @@
 <template>
   <section class="container-header">
-    <div class="centered">
+    <div :class="{ centered: isCentered, lefted: isLefted, aligncenter: isVerticalCentered }">
       <slot name="ContainerHeaderTitle"></slot>
       <hr />
       <slot name="containerHeaderParagraph"></slot>
+      <slot name="ContainerHeaderButton"></slot>
     </div>
     <div class="container-header-right-text" v-if="hasHeaderRightTextSlot">
       <slot name="containerHeaderRightList"></slot>
@@ -14,6 +15,20 @@
 <script lang="js">
 export default {
     name: 'ejm-container-header',
+    props: {
+      isCentered: {
+        type: Boolean,
+        default: false
+      },
+      isLefted: {
+        type: Boolean,
+        default: false
+      },
+      isVerticalCentered: {
+        type: Boolean,
+        default: false
+      }
+    },
     computed: {
         hasHeaderRightTextSlot() {
           return !!this.$slots.containerHeaderRightList
@@ -23,16 +38,15 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@/assets/styles/template/variables/variables.scss";
 #app.jbk {
   .container-header {
-    background-color: $color-2;
+    background-color: #101010;
     &.without-bg {
       background: transparent;
     }
     &.navigation-header {
       p {
-        @media (min-width: $lg-devices) {
+        @media (min-width: 992px) {
           max-width: 850px;
         }
       }
@@ -41,13 +55,13 @@ export default {
 }
 #app.jbk-light {
   .container-header {
-    background-color: $color-2;
+    background-color: #101010;
     &.without-bg {
       background: transparent;
     }
     &.navigation-header {
       p {
-        @media (min-width: $lg-devices) {
+        @media (min-width: 992px) {
           max-width: 850px;
         }
       }
@@ -56,7 +70,7 @@ export default {
 }
 #app.ehk {
   .container-header {
-    background-color: $color-ehk-2;
+    background-color: #043327;
     &.without-bg {
       background: transparent;
     }
@@ -64,7 +78,10 @@ export default {
 }
 #app.eck {
   .container-header {
-    background: $color-eck-2;
+    background: #042536;
+     &.without-bg {
+      background: transparent;
+    }
   }
 }
 .container-header {
@@ -75,37 +92,70 @@ export default {
   text-align: center;
   position: relative;
   top: -140px;
-  font-family: $source-sans;
 
-  @media (min-width: $sm-devices) {
+  @media (min-width: 576px) {
     max-width: 100%;
     width: 100%;
   }
 
-  @media (min-width: $lg-devices) {
+  @media (min-width: 992px) {
     padding: 90px 40px 110px 40px;
     top: -90px;
     margin: 0 auto;
   }
 
-  @media (min-width: $xl-devices) {
-    padding: 80px 0 160px 0;
+  @media (min-width: 1200px) {
+    padding: 60px 0 110px 0;
+  }
+
+  .centered {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .lefted {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-right: 0;
+    @media (min-width: 992px) {
+      margin-right: 20px;
+      align-content: flex-start;
+      align-items: flex-start;
+      justify-content: flex-start;
+      text-align: left;
+    }
+    hr {
+      margin: 20px 0;
+      text-align: left;
+    }
+  }
+
+  .aligncenter {
+    justify-content: center;
   }
 
   .page-main-title {
     font-size: 52px;
-    @media (min-width: $xl-devices) {
+    @media (min-width: 1200px) {
       font-size: 72px;
     }
   }
 
   h1,
   h2 {
-    font-size: 28px;
-    font-family: $play-fair;
-    color: $color-3;
-    @media (min-width: $lg-devices) {
-      font-size: 40px;
+    font-size: 40px;
+    color: #aa8960;
+    font-family: PlayFairDisplayBold;
+    @media (min-width: 568px) {
       margin-bottom: 0;
     }
   }
@@ -113,17 +163,17 @@ export default {
   hr {
     width: 70px;
     height: 2px;
-    background: $color-3;
+    background: #aa8960;
     margin: 30px auto;
     border: none;
-    @media (min-width: $lg-devices) {
+    @media (min-width: 992px) {
       margin: 20px auto 20px auto;
     }
   }
   p {
     font-size: 18px;
     line-height: 25px;
-    @media (min-width: $lg-devices) {
+    @media (min-width: 992px) {
       line-height: 1.3;
       width: 100%;
       max-width: 700px;
@@ -132,15 +182,13 @@ export default {
   }
 
   .container-header-right-text {
-    color: $color-2;
+    color: #101010;
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin: 20px auto;
-    padding-left: 20px;
-    @media (min-width: $lg-devices) {
-      padding-left: 0;
-      margin-left: 80px;
+    @media (min-width: 992px) {
+      margin: 0 0 20px auto;
     }
     ul {
       li {
@@ -149,7 +197,7 @@ export default {
         font-weight: bold;
         &:before {
           content: "\2713";
-          color: $color-3;
+          color: #aa8960;
           position: absolute;
           left: -20px;
         }
@@ -174,19 +222,19 @@ export default {
     justify-content: center;
 
     h1 {
-      color: $color-1;
+      color: #ffffff;
     }
 
     h2 {
       font-size: 48px;
-      @media (min-width: $lg-devices) {
+      @media (min-width: 992px) {
         font-size: 96px;
       }
     }
     p {
       font-size: 24px;
       text-transform: uppercase;
-      @media (min-width: $lg-devices) {
+      @media (min-width: 992px) {
         line-height: 1.3;
         margin: 0 auto;
       }
@@ -199,10 +247,10 @@ export default {
     margin: 0 auto;
     top: 0;
     h2 {
-      color: $color-3;
+      color: #aa8960;
     }
     p {
-      color: $color-2;
+      color: #101010;
     }
   }
 

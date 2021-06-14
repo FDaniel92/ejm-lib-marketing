@@ -1,17 +1,22 @@
 <template>
-  <nav class="navigation" v-bind:class="{ sticky: isSticky }">
+  <nav class="navigation" :class="{ open: isActive }">
     <div class="navigation-logo">
-      <slot name="navigation-logo"></slot>
+      <slot name="navigationLogo"></slot>
     </div>
     <ul
       class="navigation-list-container"
       @click="isActive = !isActive"
-      v-bind:class="{ open: isActive }"
+      :class="{ open: isActive }"
+      v-if="!isHidden"
     >
-      <slot name="navigation-list-item"></slot>
+      <slot name="navigationListItem"></slot>
     </ul>
-
-    <div class="navigation-burger-menu" @click="toggleBurgerMenu" v-bind:class="{ open: isActive }">
+    <div
+      class="navigation-burger-menu"
+      @click="toggleBurgerMenu"
+      :class="{ open: isActive }"
+      v-if="!isHidden"
+    >
       <div class="burger-menu-icon"></div>
     </div>
   </nav>
@@ -20,93 +25,102 @@
 <script lang="js">
 export default {
   name: "ejm-header",
-    props: {
-      isActive: {
-        type: Boolean,
-        default: false
-      },
-      isSticky: {
-        type: Boolean,
-        default: false
-      }
+  data() {
+    return {
+      isActive: false
+    }
+  },
+  props: {
+    isHidden: {
+      type: Boolean,
+      default: true
+    }
   },
   methods: {
     toggleBurgerMenu: function() {
       this.isActive = !this.isActive;
     }
-  }
+  },
 };
 </script>
 
 <style lang="scss">
-@import "~@/assets/styles/template/variables/variables.scss";
-
 #app.jbk {
   .navigation {
-    background: $color-jbk-1;
+    background: #80001A;
   }
   .navigation-list-container {
-    background: $color-jbk-1;
+    background: #80001A;
   }
   .navigation-list-item {
     &:hover {
-      background: $color-jbk-2;
+      background: #590012;
     }
   }
 }
 #app.jbk-light {
   .navigation {
-    background: $color-jbklight-1;
+    background: #343B46;
+    .navigation-button {
+      background: #aa8960;
+      border-radius: 20px;
+      color: white;
+      padding: 8px 25px;
+      margin: auto 30px auto 20px;
+      font-family: SourceSansPro;
+      letter-spacing: 0.1em;
+      transition: 0.25s ease-in-out;
+      &:hover {
+        background: #997A55;
+      }
+    }
   }
   .navigation-list-container {
-    background: $color-jbklight-1;
+    background: #343B46;
   }
   .navigation-list-item {
     &:hover {
-      background: $color-jbklight-2;
+      background: #242931;
     }
   }
 }
 #app.ehk {
   .navigation {
-    background: $color-ehk-1;
+    background: #004534;
   }
   .navigation-list-container {
-    background: $color-ehk-1;
+    background: #004534;
   }
   .navigation-list-item {
     &:hover {
-      background: $color-ehk-3;
+      background: #003628;
     }
   }
 }
 #app.eck {
   .navigation {
-    background: $color-eck-1;
+    background: #06354D;
   }
   .navigation-list-container {
-    background: $color-eck-1;
+    background: #06354D;
   }
   .navigation-list-item {
     &:hover {
-      background: $color-eck-2;
+      background: #042536;
     }
   }
 }
 .navigation {
   display: flex;
   flex-direction: row;
-  padding: 20px;
-  position: absolute;
+  padding: 10px 20px;
+  position: relative;
   top: 0;
   width: 100%;
   z-index: 100;
+  transition: 0.25s ease-in-out;
 
-  &.sticky {
-    position: fixed;
-  }
-
-  @media (min-width: $xl-devices) {
+  @media (min-width: 1200px) {
     align-items: center;
     padding: 0 0 0 20px;
   }
@@ -114,7 +128,6 @@ export default {
   .navigation-burger-menu {
     width: 40px;
     height: auto;
-    position: relative;
     z-index: 11;
 
     &.open {
@@ -137,7 +150,7 @@ export default {
       }
     }
 
-    @media (min-width: $xl-devices) {
+    @media (min-width: 1200px) {
       display: none;
     }
 
@@ -146,7 +159,7 @@ export default {
       height: 4px;
       top: 50%;
       transform: translateY(-50%);
-      background: $color-3;
+      background: #aa8960;
       border-radius: 20px;
       position: absolute;
       transition-duration: 0.24s;
@@ -158,7 +171,7 @@ export default {
         top: -10px;
         width: 40px;
         height: 4px;
-        background-color: $color-3;
+        background-color: #aa8960;
         content: "";
         transition-duration: 0.24s;
         transition: transform 0.24s, top 0.24s 0.24s;
@@ -170,7 +183,7 @@ export default {
         top: 10px;
         width: 40px;
         height: 4px;
-        background-color: $color-3;
+        background-color: #aa8960;
         content: "";
         transition-duration: 0.24s;
         transition: transform 0.24s, top 0.24s 0.24s;
@@ -183,7 +196,10 @@ export default {
     display: flex;
     flex-direction: row;
     margin-right: auto;
-    z-index: 11;
+    z-index: 12;
+    img {
+      height: 43px;
+    }
   }
 
   .navigation-list-container {
@@ -201,19 +217,19 @@ export default {
     overflow: hidden;
     padding: 0;
     margin: 0;
-    font-family: $source-sans;
+    font-family: SourceSansPro;
     transition: 0.24s ease-in-out;
-    z-index: 10;
+    z-index: 11;
     list-style: none;
 
     &.open {
       height: 100vh;
-      @media (min-width: $xl-devices) {
+      @media (min-width: 1200px) {
         height: 100%;
       }
     }
 
-    @media (min-width: $xl-devices) {
+    @media (min-width: 1200px) {
       display: flex;
       flex-direction: row;
       position: relative;
@@ -226,8 +242,7 @@ export default {
   }
 
   .navigation-list-item {
-    color: $color-1;
-    text-transform: uppercase;
+    color: #ffffff;
     cursor: pointer;
     transition: 0.2s ease-in-out;
     font-size: 16px;
@@ -236,8 +251,8 @@ export default {
     width: 100%;
     text-align: center;
 
-    @media (min-width: $xl-devices) {
-      padding: 30px 20px;
+    @media (min-width: 1200px) {
+      padding: 25px 20px;
       width: auto;
     }
   }

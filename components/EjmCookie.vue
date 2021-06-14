@@ -8,11 +8,11 @@
 </template>
 
 <script>
-import ejmButton from "@/components/ejm-button.vue";
+import EjmButton from "./EjmButton";
 export default {
   name: "ejm-cookie",
   components: {
-    ejmButton,
+    EjmButton,
   },
   methods: {
     setCookie(cname, exdays) {
@@ -54,30 +54,28 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@/assets/styles/template/variables/variables.scss";
-@import "~@/assets/styles/template/components/layout.scss";
 #app.ehk {
   .cookie-bar {
-    background: $color-ehk-2;
+    background: #043327;
      button {
       &:hover {
-        color: $color-ehk-2;
+        color: #043327;
       }
     }
   }
 }
-#app.jbk {
+#app.jbk, #app.jbk-light {
   .cookie-bar {
-    background: $color-2;
+    background: #101010;
     button {
       &:hover {
-        color: $color-2;
+        color: #101010;
       }
     }
   }
 }
 .cookie-bar {
-  color: $color-3;
+  color: #aa8960;
   justify-content: center;
   align-content: center;
   align-items: center;
@@ -87,7 +85,7 @@ export default {
   left: 0;
   right: 0;
   padding: 20px;
-  z-index: 100;
+  z-index: 10;
   .container {
     align-items: center;
     align-content: center;
@@ -97,14 +95,15 @@ export default {
       line-height: 24px;
     }
     a {
-      color: $color-1;
+      color: #ffffff;
     }
     button {
       margin-top: 0;
       outline: none;
       transition: 0.25s ease-in-out;
+      font-family: SourceSansPro;
       &:hover {
-        color: $color-ehk-2;
+        color: #043327;
       }
     }
   }
